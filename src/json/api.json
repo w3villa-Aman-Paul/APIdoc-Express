@@ -1,0 +1,1220 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "SuperOne API",
+      "description": "An API that allows users to get and post new data in system",
+      "contact": {
+        "name": "Amrendra",
+        "url": "https://super.one/",
+        "email": "amrendra.singh@w3villa.com"
+      }
+    },
+    "tags": [
+      {
+        "name": "SuperOne",
+        "description": "The Future Today",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "https://super.one/"
+        }
+      }
+    ],
+    "servers": [
+    
+      {
+        "url": "https://localhost:1400/",
+        "description": "Local Server"
+      },
+      {
+        "url": "https://superone/webapp",
+        "description": "Production Server"
+      }
+    ],
+    "paths": {
+      "/admin/paginatePurchasesListOfMember": {
+        "get": {
+          "tags": [
+            "SuperOne"
+          ],
+          "operationId":" Get purchase list",
+          "description": "Obtain purchase information of the of a member from database",
+          "parameters": [
+            {
+              "name": "device-type",
+              "in": "header",
+              "required": true,
+              "description": "Only one of the following is acceptable",
+              "schema": {
+                "type": "string",
+                "enum": [
+                  "WEB",
+                  "IOS",
+                  "ANDROID"
+                ]
+              }
+            },
+            {
+              "name": "token",
+              "in": "header",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3Mjg5NzUwNCwiZXhwIjoxNjc1NDg5NTA0fQ.4YE7z6psETfbwVxU4QRJN90CEfTsBHrYLgyLXBEIQ-U"
+              }
+            },
+            {
+              "name": "vNo",
+              "in": "header",
+              "description": "It is optional for 'WEB' and required for 'IOS' & 'Android'.",
+              "schema": {
+                "type": "integer",
+                "example": 1
+              }
+            },
+            {
+              "name": "pageNo",
+              "in": "query",
+              "required": "true",
+              "schema": {
+                "type": "integer",
+                "example": 3
+                
+              }
+            },
+            {
+              "name": "memberId",
+              "in": "query",
+              "required": "true",
+              "schema": {
+                "type": "integer",
+                "example": 3758,
+                "allowReserved": "true"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/stats"
+            },
+            "287.": {
+              "description": "Server Error"
+              }
+            }
+          }
+        },
+        "/writer/images/listAvatar": {
+          "get": {
+            "tags": [
+              "SuperOne"
+            ],
+            "operationId":" Get Avatars List",
+            "description": "Get all the pre-stored avatars from database.",
+            "parameters": [
+              {
+                "name": "device-type",
+                "in": "header",
+                "required": true,
+                "description": "Only one of the following is acceptable",
+                "schema": {
+                  "type": "string",
+                  "enum": [
+                    "WEB",
+                    "IOS",
+                    "ANDROID"
+                  ]
+                }
+              },
+              {
+                "name": "token",
+                "in": "header",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3Mjg5NzUwNCwiZXhwIjoxNjc1NDg5NTA0fQ.4YE7z6psETfbwVxU4QRJN90CEfTsBHrYLgyLXBEIQ-U"
+                }
+              },
+              {
+                "name": "vNo",
+                "in": "header",
+                "description": "It is optional for 'WEB' and required for 'IOS' & 'Android'.",
+                "schema": {
+                  "type": "integer",
+                  "example": 1
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "$ref": "#/components/responses/avatarList"
+              },
+              "287.": {
+                "description": "Server Error"
+              }
+            }
+          }
+        },
+      "/api/user/gamestats": {
+        "get": {
+          "tags": [
+            "Game Stats"
+          ],
+          "operationId":"All Game Stats",
+          "description": "<ul><li>Total lobby</li><li>Played Lobby</li><li>Winner</li><li>Max/Min/Average player per lobby:</li><li>Country Played</li></ul>",
+          "responses": {
+              "200": {
+                "$ref": "#/components/responses/stats"
+              }
+            }
+          }
+        },
+      "/api/user/dailyavggame": {
+        "get": {
+          "tags": [
+            "Game Stats"
+          ],
+          "operationId": "Daily average games per player",
+          "responses": {
+              "200": {
+                "$ref": "#/components/responses/dailyAvgGame"
+              }
+            }
+          }
+        },
+      "/api/user/avgplaytime": {
+        "get": {
+          "tags": [
+            "Game Stats"
+          ],
+          "operationId": "Total average games per player",
+          "responses": {
+              "200": {
+                "$ref": "#/components/responses/avgPlaytime"
+              }
+            }
+          }
+        },
+        "/api/user/retentionplayer": {
+          "get": {
+            "tags": [
+              "Game Stats"
+            ],
+            "operationId":"Daily retention rate and Weekly retention rate",
+            "description": "<ul><li>Daily retention rate, meaning how many players that played one day is playing the next day</li><li>Weekly retention rate, how many players that played one week is playing the week</li></ul>",
+            "responses": {
+                "200": {
+                  "$ref": "#/components/responses/retentionPlayer"
+                }
+              }
+            }
+          },
+        "/api/user/avgcorrectanswer": {
+          "get": {
+            "tags": [
+              "Game Stats"
+            ],
+            "operationId": "Average number of correct answers",
+            "responses": {
+                "200": {
+                  "$ref": "#/components/responses/avgCorrectAnswer"
+                }
+              }
+          }
+        },
+        "/api/user/maxcorrectanswer": {
+          "get": {
+            "tags": [
+              "Game Stats"
+            ],
+            "operationId": "Maximum correct answers",
+            "responses": {
+                "200": {
+                  "$ref": "#/components/responses/maxCorrectAnswer"
+                }
+              }
+          }
+        },
+        "/api/user/totalplayer": {
+          "get": {
+            "tags": [
+              "Game Stats"
+            ],
+            "operationId": "Total unique players",
+            "responses": {
+                "200": {
+                  "$ref": "#/components/responses/totalPlayer"
+                }
+              }
+          }
+        },
+        "/api/user/avgplaytimewinner": {
+          "get": {
+            "tags": [
+              "Game Stats"
+            ],
+            "operationId": "Average playtime for winners",
+            "responses": {
+                "200": {
+                  "$ref": "#/components/responses/avgPlaytimeWinner"
+                }
+              }
+          }
+        },
+        "/api/user/avgcorrectpercent": {
+          "get": {
+            "tags": [
+              "Game Stats"
+            ],
+            "operationId": "Percentage of average correct answers",
+            "description": "<ul><li>Lower 10% of players average correct answers</li><li>Top 10% of players average correct answers</li></ul>",
+            "responses": {
+                "200": {
+                  "$ref": "#/components/responses/avgCorrectPercent"
+                }
+              }
+          }
+        },
+        "/api/user/advancestats": {
+          "get": {
+            "tags": [
+              "Game Stats"
+            ],
+            "operationId": "Advance Stats",
+            "description": "<ul><li>Daily active players (unique)</li><li>Maximum playtime for one game round</li><li>Fastest playtime for one game round for the winner</li></ul>",
+            "responses": {
+                "200": {
+                  "$ref": "#/components/responses/advanceStats"
+                }
+              }
+          }
+        },
+          "/writer/images/uploadProfilePicture": {
+            "post": {
+              "tags": [
+                "SuperOne"
+              ],
+              "operationId":" Upload profile avatar",
+              "description": "Upload user custom image as profile avatar.",
+              "parameters": [
+                {
+                  "name": "device-type",
+                  "in": "header",
+                  "required": true,
+                  "description": "Only one of the following is acceptable",
+                  "schema": {
+                    "type": "string",
+                    "enum": [
+                      "WEB",
+                      "IOS",
+                      "ANDROID"
+                    ]
+                  }
+                },
+                {
+                  "name": "token",
+                  "in": "header",
+                  "required": true,
+                  "schema": {
+                    "type": "string",
+                    "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3Mjg5NzUwNCwiZXhwIjoxNjc1NDg5NTA0fQ.4YE7z6psETfbwVxU4QRJN90CEfTsBHrYLgyLXBEIQ-U"
+                  }
+                },
+                {
+                  "name": "vNo",
+                  "in": "header",
+                  "description": "It is optional for 'WEB' and required for 'IOS' & 'Android'.",
+                  "schema": {
+                    "type": "integer",
+                    "example": 1
+                  }
+                }
+              ],
+              "requestBody":{
+                "required": true,
+                "content": {
+                  "multipart/form-data":{
+                    "schema":{
+                      "type":"object",
+                      "properties":{
+                        "image": {
+                          "type": "file",
+                          "required": true,
+                          "description": "The file must be (.jpg, .jpeg, .png) extention.",
+                          "example": "exampleProfile.png"
+                        } 
+                      }
+                    }
+                  }
+                }
+              },      
+              "responses": {
+                "200": {
+                  "$ref": "#/components/responses/uploadProfilePicture"
+                },
+                "287.": {
+                  "description": "Server Error"
+                  }
+                }
+              }
+            },
+            "/writer/images/setAvatar": {
+              "post": {
+                "tags": [
+                  "SuperOne"
+                ],
+                "operationId":"Set profile Avatar.",
+                "description": "Set profile avatar from pre-provided avatars.",
+                "parameters": [
+                  {
+                    "name": "device-type",
+                    "in": "header",
+                    "required": true,
+                    "description": "Only one of the following is acceptable",
+                    "schema": {
+                      "type": "string",
+                      "enum": [
+                        "WEB",
+                        "IOS",
+                        "ANDROID"
+                      ]
+                    }
+                  },
+                  {
+                    "name": "token",
+                    "in": "header",
+                    "required": true,
+                    "schema": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY3Mjg5NzUwNCwiZXhwIjoxNjc1NDg5NTA0fQ.4YE7z6psETfbwVxU4QRJN90CEfTsBHrYLgyLXBEIQ-U"
+                    }
+                  },
+                  {
+                    "name": "vNo",
+                    "in": "header",
+                    "description": "It is optional for 'WEB' and required for 'IOS' & 'Android'.",
+                    "schema": {
+                      "type": "integer",
+                      "example": 1
+                    }
+                  },
+                  {
+                    "name": "id",
+                    "in": "path",
+                    "description": "The avatar's id which the user chooses to set as his profile avatar.",
+                    "schema":{
+                      "type": "object",
+                      "example": 2
+                    }
+                  }
+                ],
+                "responses": {
+                  "200": {
+                    "$ref": "#/components/responses/setProfileAvatar"
+                  },
+                  "287.": {
+                    "description": "Server Error"
+                    }
+                  }
+                }
+              },
+        "Errors": {
+          "options": {
+            "description": "Error Responses",
+            "responses": {
+              "404": {
+                "$ref": "#/components/responses/404"
+              },
+              "400": {
+                "$ref": "#/components/responses/400"
+              },
+              "401": {
+                "$ref": "#/components/responses/401"
+              },
+              "408": {
+                "$ref": "#/components/responses/408"
+              },
+              "500": {
+                "$ref": "#/components/responses/500"
+              },
+              "502": {
+                "$ref": "#/components/responses/502"
+              },
+              "503": {
+                "$ref": "#/components/responses/503"
+              }
+            }
+          }
+        }
+      },
+      "components": {
+        "responses": {
+          "stats": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/statsList"
+                }
+              }
+            }
+          },
+          "dailyAvgGame": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/dailyAvgGame"
+                }
+              }
+            }
+          },
+          "avgPlaytime": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/avgPlaytime"
+                }
+              }
+            }
+          },
+          "retentionPlayer": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/retentionPlayer"
+                }
+              }
+            }
+          },
+          "avgCorrectAnswer": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/avgCorrectAnswer"
+                }
+              }
+            }
+          },
+          "maxCorrectAnswer": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/maxCorrectAnswer"
+                }
+              }
+            }
+          },
+          "totalPlayer": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/totalPlayer"
+                }
+              }
+            }
+          },
+          "avgPlaytimeWinner": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/avgPlaytimeWinner"
+                }
+              }
+            }
+          },
+          "avgCorrectPercent": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/avgCorrectPercent"
+                }
+              }
+            }
+          },
+          "advanceStats": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/advanceStats"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/purchaseList"
+                }
+              }
+            }
+          },
+          "avatarList":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/avatarList"
+                }
+              }
+            }
+          },
+          "uploadProfilePicture":{
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/uploadProfilePicture"
+                }
+              }
+            }
+          },
+          "setProfileAvatar": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/setProfileAvatar"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/badRequest"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorised",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/unAuthorised"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/resourceNotFound"
+                }
+              }
+            }
+          },
+          "408": {
+            "description": "Request Timeout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/timeOut"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/internalServerError"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Bad Gateway",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/badGateway"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailabe",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/serviceUnavailable"
+                }
+              }
+            }
+          }
+        },
+        "schemas": {
+          "purchaseList": {
+            "description": "It contais the purchase list of the members",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "array",
+                "example": [
+                  {
+                    "packageid": 92640,
+                    "packageIssueType": "PAID",
+                    "saleVolume": 10,
+                    "upgradedToId": null,
+                    "paymentType": "NORMAL",
+                    "Cash": 0,
+                    "createdAt": 1672721709076,
+                    "points": 0,
+                    "purchaseStatus": "BUY"
+                  }
+                ]
+              }
+            }
+          },
+          "avatarList":{
+            "description": "It contais all pre-build avatars stored in database.",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Image list fetched successfully."
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": { "type": "array of objects",
+              "example": [
+                      {
+                          "id": 1,
+                          "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/alan_shearer.webp"
+                      },
+                      {
+                          "id": 2,
+                          "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/alessandro_del_piero.webp"
+                      },
+                      {
+                          "id": 3,
+                          "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/alfredo_di_stefano.webp"
+                      },
+                      {
+                          "id": 4,
+                          "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/andrea_pirlo.webp"
+                      },
+                      {
+                          "id": 5,
+                          "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/andres_iniesta.webp"
+                      },
+                      {
+                          "id": 6,
+                          "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/andriy_shevchenko.webp"
+                      },
+                      {
+                          "id": 7,
+                          "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/arjen_robben.webp"
+                      },
+                      {
+                          "id": 8,
+                          "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/bobby_charlton.webp"
+                      }
+              ]
+            }
+          }
+        },
+          "statsList": {
+            "description": "It contais the list of game stats",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{ 
+                  "totalLobby": [
+                    {
+                      "total": 6085,
+                      "played": 6023,
+                      "todayPlayed": 72
+                    }
+                  ],
+                  "winners": [
+                    {
+                      "count": 6021,
+                      "rank": 1
+                    },
+                    {
+                      "count": 6020,
+                      "rank": 2
+                    },
+                    {
+                      "count": 6008,
+                      "rank": 3
+                    }
+                  ],
+                  "maxMinAvg": [
+                    {
+                      "max": 40,
+                      "min": 1,
+                      "sum": 12.1476,
+                      "hours": 503.0833
+                    }
+                  ],
+                  "winningPrize": [
+                    {
+                      "winnerPrizeSum": 21075.5
+                    }
+                  ],
+                  "countryCount": [
+                    {
+                      "count": 82
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "dailyAvgGame": {
+            "description": "It contais the count of daily average games per player",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{ 
+                  "dailyAvgGame": [
+                    {
+                        "count": 6.4713
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "totalAvgGame": {
+            "description": "It contais the count of total average games per player",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{ 
+                  "totalAvgGame": [
+                    {
+                        "count": 28
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "avgPlaytime": {
+            "description": "It contais the average playtime per player in minutes",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{ 
+                  "avgPlaytime": [
+                    {
+                        "average": "2.61551704"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "retentionPlayer": {
+            "description": "It contais the count of daily retention rate, Weekly retention rate of the player",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{
+                    "dailyRetentionPlayer": 10,
+                    "weeklyRetentionPlayer": 5
+                }
+              }
+            }
+          },
+          "avgCorrectAnswer": {
+            "description": "It contais the average number of correct answers ",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{
+                  "avgCorrectAnswer": [
+                      {
+                        "count": 14
+                      }
+                  ]
+                }
+              }
+            }
+          },
+          "maxCorrectAnswer": {
+            "description": "It contais the count of maximum correct answers",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{
+                  "maxCorrectAnswer": [
+                      {
+                        "count": 88
+                      }
+                  ]
+                }
+              }
+            }
+          },
+          "totalPlayer": {
+            "description": "It contais the count of total unique players",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{
+                  "totalPlayer": [
+                      {
+                        "count": 2815
+                      }
+                  ]
+                }
+              }
+            }
+          },
+          "avgPlaytimeWinner": {
+            "description": "It contais the average playtime for winners in minutes",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{
+                  "avgPlaytimeWinner": [
+                    {
+                      "average": 4.45027212
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "avgCorrectPercent": {
+            "description": "It contais the count of lower 10% of players average correct answers and top 10% of players average correct answers",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{
+                  "lowerTenPercentAvgCorrect": [
+                    {
+                      "count": 4
+                    }
+                  ],
+                  "topTenPercentAvgCorrect": [
+                    {
+                      "count": 43
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "advanceStats": {
+            "description": "It contais the count of data maximum playtime for one game round and fastest playtime for one game round for the winner and Daily active players (unique)",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "success"
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example":{
+                  "dailyActivePlayer": [
+                    {
+                      "count": 209
+                    }
+                  ],
+                  "fastestPlaytime": [
+                    {
+                      "time": 0.7333
+                    }
+                  ],
+                  "maxPlaytime": [
+                    {
+                      "time": 16.1333
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "uploadProfilePicture":{
+            "description": "This object contains the id and url of the image uploaded as the user's profile avatar.",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Image uploaded successfully."
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example": {
+                            "id": 4,
+                            "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/alan_shearer.webp"
+                          }
+              }
+            }
+          },
+          "setProfileAvatar":{
+            "description": "This object contains the id and url of the avatar set as the user's profile avatar.",
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Avatar updated successfully."
+              },
+              "success": {
+                "type": "string",
+                "example": "true"
+              },
+              "data": {
+                "type": "object",
+                "example": {
+                            "message": "Avatar updated successfully.",
+                            "url": "https://superone-assets.s3.eu-west-2.amazonaws.com/profile/alan_shearer.webp"
+                          }
+              }
+            }
+          },
+  
+          "resourceNotFound": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Error"
+              },
+              "success": {
+                "type": "string",
+                "example": "false"
+              },
+              "data": {
+                "type": "string",
+                "example": {
+                  "error": "Resource not found"
+                }
+              }
+            }
+          },
+          "badRequest": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Error"
+              },
+              "success": {
+                "type": "string",
+                "example": "false"
+              },
+              "data": {
+                "type": "string",
+                "example": {
+                  "error": "Bad Gateway"
+                }
+              }
+            }
+          },
+          "unAuthorised": {
+            "properties": {
+              "error": {
+                "type": "string",
+                "example": "Unauthorised"
+              }
+            }
+          },
+          "timeOut": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Error"
+              },
+              "success": {
+                "type": "string",
+                "example": "false"
+              },
+              "data": {
+                "type": "string",
+                "example": {
+                  "error": "Request Timeout"
+                }
+              }
+            }
+          },
+          "internalServerError": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Error"
+              },
+              "success": {
+                "type": "string",
+                "example": "false"
+              },
+              "data": {
+                "type": "string",
+                "example": {
+                  "error": "Internal Server Error"
+                }
+              }
+            }
+          },
+          "badGateway": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Error"
+              },
+              "success": {
+                "type": "string",
+                "example": "false"
+              },
+              "data": {
+                "type": "string",
+                "example": {
+                  "error": "Bad Gateway"
+                }
+              }
+            }
+          },
+          "serviceUnavailable": {
+            "properties": {
+              "message": {
+                "type": "string",
+                "example": "Error"
+              },
+              "success": {
+                "type": "string",
+                "example": "false"
+              },
+              "data": {
+                "type": "string",
+                "example": {
+                  "error": "Service Unavailabe"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
