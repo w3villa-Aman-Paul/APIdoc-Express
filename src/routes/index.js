@@ -1,20 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
-const authMiddleware = require('../middlewares/authentication');
+const { apiDocUIController, authController, jsonController } = require('../controllers');
 
-router.get('/', (req, res) => {
-    res.render('login.html')
-});
-
+router.get('/', authController.renderLoginPage);
 router.post('/login', authController.login);
-
-router.get('/jsonfile', (req, res) => {
-    const apiJson = require('../json/api.json');
-    res.send(apiJson);
-})
-
+router.get('/apidoc',apiDocUIController.renderDoc);
+router.get('/jsonfile', jsonController.jsonFile);
 router.post('/verify', authController.verifyUser)
-
 
 module.exports = router;

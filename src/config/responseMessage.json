@@ -1,0 +1,8 @@
+{
+    "400": "Bad Request!",
+    "401": "Unauthorized",
+    "404": "Not Found!",
+    "200": "Success",
+    "userVerified" : "User verified.",
+    "tokenExpired": "Token is expired. Please login again"
+}
